@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { Clients } from 'src/app/Interfaces/clients';
+import { Clients } from 'src/app/Interfaces/clientInterfaces/clients';
 import { DataAccessService } from '../../app/Services/data-access.service';
 import { stringToArray } from 'konva/lib/shapes/Text';
+import { ClientData } from 'src/app/Interfaces/clientInterfaces/clientdata';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-clients',
@@ -12,23 +14,35 @@ export class ClientsComponent{
 
   clientsList = []
   client: Clients | null = null; // Initialize client data
+  clientData : ClientData | null = null
+  DataSourceClients : any = new MatTableDataSource
+  displayedColumns : string[] = ['client_id','client_Name','client_LastName','client_Email','client_PhoneNumber','client_Register_Date']
   constructor(private http : DataAccessService) { }
 
   
   ngOnInit(){
-    this.getClientById();
+    this.GetAllClients();
   }
 
-  GetAllClients():Clients[]{
-    return this.clientsList;
+  GetAllClients(): void {
+    this.http.GetAllClients()
+      .subscribe({
+        next: (response: ClientData) => {
+          this.clientData = response;
+          this.DataSourceClients = this.clientData.data
+        },
+        error: (error: any) => {
+          console.error('HTTP error', error);
+        }
+      });
   }
+
+
   getClientById(): void {
     this.http.getClientById(2)
       .subscribe({
-        next: (response: Clients) => {
-          
+        next: (response: Clients) => {        
           this.client = response;
-          console.log(this.client)
         },
         error: (error: any) => {
           console.error('HTTP Error:', error); // Log HTTP error
