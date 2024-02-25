@@ -4,6 +4,7 @@ import { DataAccessService } from '../../app/Services/data-access.service';
 import { stringToArray } from 'konva/lib/shapes/Text';
 import { ClientData } from 'src/app/Interfaces/clientInterfaces/clientdata';
 import { MatTableDataSource } from '@angular/material/table';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-clients',
@@ -15,13 +16,27 @@ export class ClientsComponent{
   clientsList = []
   client: Clients | null = null; // Initialize client data
   clientData : ClientData | null = null
-  DataSourceClients : any = new MatTableDataSource
+  DataSourceClients : any = new MatTableDataSource([])
   displayedColumns : string[] = ['client_id','client_Name','client_LastName','client_Email','client_PhoneNumber','client_Register_Date']
-  constructor(private http : DataAccessService) { }
+  form : FormGroup
+  constructor(private http : DataAccessService) {
+    this.form = new FormGroup({
+      client_name  : new FormControl(),
+      client_LastName : new FormControl(),
+      client_phoneNumber : new FormControl(),
+      client_email : new FormControl(),
+      client_Register_Date: new FormControl([new Date()][0])
+    })
+   }
 
   
   ngOnInit(){
     this.GetAllClients();
+    
+  }
+
+  get f(){
+    return this.form.controls
   }
 
   GetAllClients(): void {
@@ -51,10 +66,12 @@ export class ClientsComponent{
       
   }
 
-
-
   CreateClient(){
-    return 1;
+    this.http.PostClient(this.form.value)
+    .subscribe(data =>{
+      this.GetAllClients();
+    })
+    this.form.reset();
   }
   DeleteClient() {
     return 1;

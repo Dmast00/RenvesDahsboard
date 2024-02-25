@@ -2,29 +2,32 @@
 <div class="row" style="display: flex; flex-direction: row; justify-content: center;">
     <h1>Clients Catalog</h1>
 </div>
-<div class="row" style="margin-top: 20px;display: flex; flex-direction: row; justify-content: center;">
-    <mat-form-field class="formfield">
-        <mat-label >Name
-        </mat-label>
-        <input matInput>
-    </mat-form-field>
-    <mat-form-field class="formfield">
-        <mat-label >Last Name
-        </mat-label>
-        <input matInput>
-    </mat-form-field>
-    <mat-form-field class="formfield">
-        <mat-label >Phone number
-        </mat-label>
-        <input matInput>
-    </mat-form-field>
-    <mat-form-field class="formfield">
-        <mat-label >Email Address
-        </mat-label>
-        <input matInput>
-    </mat-form-field>
+<div class="row" style="margin-top: 20px;display: flex; flex-direction: row; justify-content: center;" >
+    <form [formGroup]="form" (keyup.enter)="CreateClient()">
+        <mat-form-field class="formfield">
+            <mat-label >Name
+            </mat-label>
+            <input matInput formControlName="client_name">
+        </mat-form-field>
+        <mat-form-field class="formfield">
+            <mat-label >Last Name
+            </mat-label>
+            <input matInput formControlName="client_LastName">
+        </mat-form-field>
+        <mat-form-field class="formfield">
+            <mat-label >Phone number
+            </mat-label>
+            <input matInput formControlName="client_phoneNumber">
+        </mat-form-field>
+        <mat-form-field class="formfield">
+            <mat-label >Email Address
+            </mat-label>
+            <input matInput formControlName="client_email">
+        </mat-form-field>
+        <input type="hidden" formControlName="client_Register_Date">
+    </form>
     <div class="" style="display: flex; flex-direction: row;justify-content: center;">
-        <button mat-fab color="accent" aria-label="Example icon button with a bookmark icon">
+        <button mat-fab (click)="CreateClient()" color="accent" aria-label="Example icon button with a bookmark icon">
             <mat-icon>add</mat-icon>
         </button>
     </div>
@@ -67,15 +70,3 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
-<!-- <div *ngIf="clientData">
-    <h1>All Clients</h1>
-    <div *ngFor="let client of clientData.data">
-      <h2>Client ID: {{ client.client_id }}</h2>
-      <p>Name: {{ client.client_Name }}</p>
-      <p>Last Name: {{ client.client_LastName }}</p>
-      <p>Phone Number: {{ client.client_PhoneNumber }}</p>
-      <p>Email: {{ client.client_Email }}</p>
-      <p>Register Date: {{ client.client_Register_Date }}</p>
-      <hr>
-    </div>
-  </div> -->

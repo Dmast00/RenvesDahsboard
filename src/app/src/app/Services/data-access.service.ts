@@ -21,6 +21,9 @@ export class DataAccessService {
     
     return this.http.get<Clients>(this.apiUrl+ApiPaths.ApiVersion+'/Client/'+id)
   }
+  PostClient(form : any){
+    return this.http.post(this.apiUrl+ApiPaths.ApiVersion+'/Client',form)
+  }
 
   //END CLIENTS SERVICES METHODS
 }
