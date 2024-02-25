@@ -19,13 +19,14 @@ export class ClientsComponent{
   DataSourceClients : any = new MatTableDataSource([])
   displayedColumns : string[] = ['client_id','client_Name','client_LastName','client_Email','client_PhoneNumber','client_Register_Date']
   form : FormGroup
+  date : any
   constructor(private http : DataAccessService) {
     this.form = new FormGroup({
       client_name  : new FormControl(),
       client_LastName : new FormControl(),
       client_phoneNumber : new FormControl(),
       client_email : new FormControl(),
-      client_Register_Date: new FormControl([new Date()][0])
+      client_Register_Date: new FormControl()
     })
    }
 
@@ -67,6 +68,9 @@ export class ClientsComponent{
   }
 
   CreateClient(){
+    const currentDate = new Date();
+    const currentDateTimeString = currentDate.toISOString();
+    this.form.patchValue({client_Register_Date : currentDateTimeString})
     this.http.PostClient(this.form.value)
     .subscribe(data =>{
       this.GetAllClients();
