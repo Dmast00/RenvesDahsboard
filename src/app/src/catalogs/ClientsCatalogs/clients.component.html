@@ -32,4 +32,12 @@
 <mat-divider>
 
 </mat-divider>
-
+<div *ngIf="client">
+    <h1>Client Details</h1>
+    <p>ID: {{ client.data?.client_id }}</p>
+    <p>Name: {{ client.data?.client_Name }}</p>
+    <p>Last Name: {{ client.data?.client_LastName }}</p>
+    <p>Phone Number: {{ client.data?.client_PhoneNumber }}</p>
+    <p>Email: {{ client.data?.client_Email }}</p>
+    <p>Register Date: {{ client.data?.client_Register_Date }}</p>
+  </div>

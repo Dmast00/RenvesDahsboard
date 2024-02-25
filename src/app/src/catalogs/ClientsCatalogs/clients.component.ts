@@ -1,32 +1,44 @@
 import { Component } from '@angular/core';
 import { Clients } from 'src/app/Interfaces/clients';
+import { DataAccessService } from '../../app/Services/data-access.service';
+import { stringToArray } from 'konva/lib/shapes/Text';
 
 @Component({
   selector: 'app-clients',
   templateUrl: './clients.component.html',
   styleUrls: ['./clients.component.css']
 })
-export class ClientsComponent implements Clients{
+export class ClientsComponent{
 
-  client_id!: number;
-  client_name!: string;
-  client_lastname!: string;
-  client_phonenumber!: string;
-  client_email!: string;
-  client_register_date!: Date;
-  clientsList : Clients[] = []
-  client! : Clients;
-  constructor() 
-  {
+  clientsList = []
+  client: Clients | null = null; // Initialize client data
+  constructor(private http : DataAccessService) { }
 
+  
+  ngOnInit(){
+    this.getClientById();
   }
 
   GetAllClients():Clients[]{
     return this.clientsList;
   }
-  GetClientById () {
-    return this.client
+  getClientById(): void {
+    this.http.getClientById(2)
+      .subscribe({
+        next: (response: Clients) => {
+          
+          this.client = response;
+          console.log(this.client)
+        },
+        error: (error: any) => {
+          console.error('HTTP Error:', error); // Log HTTP error
+        }
+      });
+      
   }
+
+
+
   CreateClient(){
     return 1;
   }
