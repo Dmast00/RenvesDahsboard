@@ -19,7 +19,7 @@ export class ClientsComponent{
   DataSourceClients : any = new MatTableDataSource([])
   displayedColumns : string[] = ['client_id','client_Name','client_LastName','client_Email','client_PhoneNumber','client_Register_Date']
   form : FormGroup
-  date : any
+
   constructor(private http : DataAccessService) {
     this.form = new FormGroup({
       client_name  : new FormControl(),
