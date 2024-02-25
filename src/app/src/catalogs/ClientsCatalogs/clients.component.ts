@@ -17,7 +17,7 @@ export class ClientsComponent{
   client: Clients | null = null; // Initialize client data
   clientData : ClientData | null = null
   DataSourceClients : any = new MatTableDataSource([])
-  displayedColumns : string[] = ['client_id','client_Name','client_LastName','client_Email','client_PhoneNumber','client_Register_Date']
+  displayedColumns : string[] = ['client_id','client_Name','client_LastName','client_Email','client_PhoneNumber','client_Register_Date','Actions']
   form : FormGroup
 
   constructor(private http : DataAccessService) {
@@ -53,7 +53,6 @@ export class ClientsComponent{
       });
   }
 
-
   getClientById(): void {
     this.http.getClientById(2)
       .subscribe({
@@ -64,7 +63,6 @@ export class ClientsComponent{
           console.error('HTTP Error:', error); // Log HTTP error
         }
       });
-      
   }
 
   CreateClient(){
@@ -77,10 +75,15 @@ export class ClientsComponent{
     })
     this.form.reset();
   }
-  DeleteClient() {
-    return 1;
+  DeleteClient(id : number) {
+    
+    this.http.DeleteClient(id)
+    .subscribe(data => {
+      this.GetAllClients();
+    })
   }
-  UpdateClient (){
+  UpdateClient (id : number){
+    console.log(id)
     return 1;
   }
 

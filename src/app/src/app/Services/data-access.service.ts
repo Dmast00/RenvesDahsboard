@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Clients } from 'src/app/Interfaces/clientInterfaces/clients';
@@ -25,5 +25,15 @@ export class DataAccessService {
     return this.http.post(this.apiUrl+ApiPaths.ApiVersion+'/Client',form)
   }
 
+  DeleteClient(id:number){
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      }),
+      body: { client_id : id } // Request body
+    };
+    console.log(options)
+    return this.http.delete(this.apiUrl+ApiPaths.ApiVersion+'/Client',options)
+  }
   //END CLIENTS SERVICES METHODS
 }

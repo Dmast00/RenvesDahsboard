@@ -62,10 +62,20 @@
         <td mat-cell *matCellDef="let item" >{{item.client_PhoneNumber}}</td>
       </ng-container>
 
+      
       <ng-container matColumnDef="client_Register_Date">
-        <th mat-header-cell *matHeaderCellDef>Register Date</th>
-        <td mat-cell *matCellDef="let item" >{{item.client_Register_Date}}</td>
-      </ng-container>
+          <th mat-header-cell *matHeaderCellDef>Register Date</th>
+          <td mat-cell *matCellDef="let item" >{{item.client_Register_Date}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="Actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let item" >
+                <button mat-raised-button color="primary" (click)="UpdateClient(item.client_id)">Update</button>
+                <span style="padding: 2px;"></span>
+                <button mat-raised-button color="warn" (click)="DeleteClient(item.client_id)">Delete</button>
+            </td>
+        </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
